@@ -3,8 +3,8 @@ import Image from "next/image";
 
 export default function Navbar() {
     return (
-        <nav className="px-12 py-5 flex justify-between items-center space-x-4">
-            <Image src="/logo.jpg" alt="Logo" width={80} height={80} className="rounded-md" />
+        <nav className="w-full px-12 py-5 flex justify-between items-center space-x-4">
+            <Image src="/logo.jpg" alt="Logo" width={80} height={80} className="w-auto h-auto rounded-md" />
 
             <div className="flex gap-5 items-center">
                 <div className="bg-slate-200 h-10 w-80 rounded-lg flex px-4 justify-between">
