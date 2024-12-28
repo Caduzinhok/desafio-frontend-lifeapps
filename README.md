@@ -24,7 +24,7 @@ Primeiro, execute o seguinte comando:
 
 ```bash
 npm install
-# ou
+# or
 yarn install
 ```
 
