@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import CategoryFilter from "@/interfaces/categoryFilter";
 import Product from "@/interfaces/product";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import nextAppLoader from "next/dist/build/webpack/loaders/next-app-loader";
+import Footer from "@/components/footer";
 
 const categoryFilters: CategoryFilter[] = [
   {
@@ -28,19 +30,23 @@ const categoryFilters: CategoryFilter[] = [
 
 export default function Home() {
   const [arrayCategoryFilters, setArrayCategoryFilters] = useState<CategoryFilter[]>(categoryFilters)
-  const [auxProducts, setAuxProducts] = useState<Product[]>()
+  const [auxProducts, setAuxProducts] = useState<Product[]>() // Array auxiliar de produtos para não chamar a API toda vez que alterar a listagem de produtos
   const [products, setProducts] = useState<Product[]>()
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-  const productsPerPage = 9
+  const [totalProducts, setTotalProducts] = useState(0)
+  const productsPerPage = 9 // Quantidade de produtos por página pré setado
 
   useEffect(() => {
     fetch('https://api-prova-frontend.solucoeslifeapps.com.br/products')
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+
+        // Atualizar Estados para gerenciamento de catalogo de produtos
         setProducts(data);
         setTotalPages(Math.ceil(data.length / productsPerPage))
+        setTotalProducts(data.length)
         setAuxProducts(data)
       })
       .catch((err) => {
@@ -52,15 +58,54 @@ export default function Home() {
     filter_products_by_page();
   }, [currentPage]);
 
-  function filterProductsByCategory(name: string) {
+  function filterProductsByCategory(categoryName: string) {
     // Alterar a opção selecionada de acordo com o click atual
     let auxArrayFilters = arrayCategoryFilters.map((categoryFilter) => {
-      categoryFilter.selected = categoryFilter.name === name ? true : false
+      categoryFilter.selected = categoryFilter.name === categoryName ? true : false
       return categoryFilter
     })
 
-    // Atualizar as opções com o novo estado do item selecionado
-    setArrayCategoryFilters(auxArrayFilters)
+    setArrayCategoryFilters(auxArrayFilters) // Atualizar filtros para mostrar o atual selecionado
+    
+    if(categoryName === "Todos os Produtos"){
+      // Atualizar a quantidade de produtos na pagina
+      if (auxProducts){
+        setTotalProducts(auxProducts.length)
+      }
+
+      // Atualizar para todos os produtos
+      setProducts(auxProducts)
+      return
+    }
+
+    let arrayProducts = auxProducts?.filter((product) => {
+      return product.category === categoryName && product
+    })
+
+    console.log(arrayProducts)
+    setProducts(arrayProducts)
+
+    if (arrayProducts){
+      setTotalProducts(arrayProducts.length)
+    }
+    setCurrentPage(1)
+  }
+
+  function order_by_filter(selectedFilter: string){
+    let arrayProducts = products
+
+    if(selectedFilter !== 'most-purchased'){
+      arrayProducts = products?.toSorted((prevProduct, nextProduct) => {
+        return selectedFilter === 'highest-price' ?
+        (Number(nextProduct.price) - Number(prevProduct.price)) : 
+        (Number(prevProduct.price) - Number(nextProduct.price))
+    })
+    
+    setProducts(arrayProducts) // Observação para ajustar - Quando está com categoria filtrada, está limpando o filtro de categoria.
+    return
+    }
+
+    setProducts(auxProducts)
   }
 
   function filter_products_by_page() {
@@ -90,7 +135,7 @@ export default function Home() {
   return (
     <div className="max-w-full w-full">
       <Navbar />
-      <main className="space-y-8 w-full">
+      <main className="space-y-8 w-full mb-20">
         <div className="h-96 overflow-hidden relative">
           <Image
             src="/background-image.jpg"
@@ -121,10 +166,10 @@ export default function Home() {
 
         <div className="flex justify-between items-center px-20">
           <span className="text-lg font-medium">
-            {auxProducts && `${auxProducts.length} Produtos`}
+            {totalProducts && `${totalProducts} Produtos`}
           </span>
 
-          <select name="filter-order" id="filter-order" className="w-64 py-2 px-4 border border-slate-500 focus:outline-none ">
+          <select name="filter-order" id="filter-order" className="w-64 py-2 px-4 border border-slate-500 focus:outline-none" onChange={e => order_by_filter(e.target.value)}>
             <option value="most-purchased">Mais Comprados</option>
             <option value="highest-price">Maior Preço</option>
             <option value="lowest-price">Menor Preço</option>
@@ -179,6 +224,8 @@ export default function Home() {
           </button>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
