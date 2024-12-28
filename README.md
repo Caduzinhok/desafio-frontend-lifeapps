@@ -15,6 +15,7 @@ O objetivo é implementar um e-commerce para venda de vestuário. O layout é co
 - [X] Utilize React.js ou Vue.js (podendo optar pelo Next.js ou Nuxt.js)
 - [ ] Faça a componentização do seu projeto
 - [ ] Utilize o local storage para gerenciar o carrinho
+- [X] Utilize a estrutura da api para fazer a paginação do lado do servidor
 - [X] Por favor, inclua no README as instruções de instalação do projeto
 
 ## Instalação
@@ -36,3 +37,12 @@ yarn dev
 
 Abra o projeto em [http://localhost:3000](http://localhost:3000) com qualquer navegador e veja como ficou o desafio.
 
+## Observações
+Referente a etapa: "Utilize a estrutura da api para fazer a paginação do lado do servidor" - Feito do lado do cliente, pois ao realizar o teste da
+API, com o parametro _page & _limit, a mesma não alterou os dados, ex.
+Com os seguintes endpoints e parâmetros:
+https://api-prova-frontend.solucoeslifeapps.com.br/products?_page=2&_limit=9
+
+https://api-prova-frontend.solucoeslifeapps.com.br/products?_page=1&_limit=9
+
+Ambos os resultados foram idênticos
