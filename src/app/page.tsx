@@ -8,6 +8,7 @@ import Product from "@/interfaces/product";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import nextAppLoader from "next/dist/build/webpack/loaders/next-app-loader";
 import Footer from "@/components/footer";
+import ProductCard from "@/components/productCard";
 
 const categoryFilters: CategoryFilter[] = [
   {
@@ -142,7 +143,7 @@ export default function Home() {
             alt="Main image about shopping"
             className="fill-inherit bg-cover"
             width={1920}
-            height={500}
+            height={800}
           />
         </div>
 
@@ -180,27 +181,9 @@ export default function Home() {
           {products && (
             products.map((product) => {
               return (
-                <div key={product.id} className="flex flex-col space-y-5 items-center basis-1/4 max-w-1/4">
-                  <div className="relative w-full h-96">
-                    <Image
-                      src={product.image}
-                      alt="Main image about shopping"
-                      className="object-cover w-full h-full"
-                      width={400}
-                      height={300}
-                    />
-                  </div>
-                  <p className="text-xl text-slate-900">{product.name}</p>
-                  {product.promotional_price ? (
-                    <div className="space-x-4">
-                      <span className="line-through text-slate-600">R$ {product.price.toString()}</span>
-                      <span className="">R$ {product.promotional_price.toString()}</span>
-                    </div>
-                  ) : (
-                    <span className="text-black">R$ {product.price.toString()}</span>
-                  )}
-
-                </div>
+                <ProductCard key={product.id}
+                {...product}
+                />
               )
             })
           )}
