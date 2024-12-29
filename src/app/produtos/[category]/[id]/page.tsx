@@ -37,9 +37,9 @@ export default function ProductPage() {
   return (
     <>
       {produto ? (
-        <div className="min-h-screen h-screen flex flex-col justify-center items-center">
+        <div className="min-h-screen h-screen flex flex-col justify-between items-center">
           <Navbar />
-          <main className="h-full flex flex-col px-20 py-2 w-full">
+          <main className="w-full h-full flex flex-col justify-start items-start px-20 py-2 ">
             <p className="text-lg text-slate-700">
               <Link href="/">Home / Produtos / </Link><span className="font-medium">{produto.category}</span>
             </p>
