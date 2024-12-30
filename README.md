@@ -7,14 +7,14 @@ Este projeto visa a solução do Desafio de Frontend de criação de um simples 
 O objetivo é implementar um e-commerce para venda de vestuário. O layout é composto por uma página de catálogo de produtos, onde o usuário pode filtrar por categoria e buscar por nome do produto:
 - [X] Listagem de produtos com paginação
 - [X] Seleção de categorias fixas (Camisetas, Calças, Tênis)
-- [ ] Visualizar detalhes do produto
-- [ ] Adicionar e remover produtos do carrinho
+- [X] Visualizar detalhes do produto
+- [X] Adicionar e remover produtos do carrinho
 
 ## Etapas
 - [X] Consuma a **API JSON Server** disponível neste [link](https://api-prova-frontend.solucoeslifeapps.com.br/)
 - [X] Utilize React.js ou Vue.js (podendo optar pelo Next.js ou Nuxt.js)
 - [ ] Faça a componentização do seu projeto
-- [ ] Utilize o local storage para gerenciar o carrinho
+- [X] Utilize o local storage para gerenciar o carrinho
 - [X] Utilize a estrutura da api para fazer a paginação do lado do servidor
 - [X] Por favor, inclua no README as instruções de instalação do projeto
 
@@ -46,3 +46,11 @@ https://api-prova-frontend.solucoeslifeapps.com.br/products?_page=2&_limit=9
 https://api-prova-frontend.solucoeslifeapps.com.br/products?_page=1&_limit=9
 
 Ambos os resultados foram idênticos
+
+## Bibliotecas e ferramentas utilizadas
+<ul>
+    <li>Next JS</li>
+    <li>Lucide React</li>
+    <li>Redux</li>
+    <li>Tailwindcss</li>
+</ul>

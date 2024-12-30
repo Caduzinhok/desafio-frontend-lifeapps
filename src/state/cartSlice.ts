@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-
+import { getCartFromLocalStorage, saveCartToLocalStorage } from '@/utils/localStorage' 
 import Product from '@/interfaces/product'
 
 interface CartState {
@@ -7,7 +7,7 @@ interface CartState {
 }
 
 const initialState: CartState = {
-    products: []
+    products: getCartFromLocalStorage()
 }
 
 const cartSlice = createSlice({
@@ -16,12 +16,15 @@ const cartSlice = createSlice({
     reducers: {
         addProduct: (state, action: PayloadAction<Product>) => {
             state.products.push(action.payload)
+            saveCartToLocalStorage(state.products)
         },
         removeProduct: (state, action: PayloadAction<string>) => {
             state.products = state.products.filter((product: Product) => product.id !== action.payload)
+            saveCartToLocalStorage(state.products)
         },
         clearCart: (state) => {
             state.products = []
+            saveCartToLocalStorage(state.products)
         }
     },
 
