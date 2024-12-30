@@ -94,9 +94,11 @@ export default function Home() {
 
     if(selectedFilter !== 'most-purchased'){
       arrayProducts = products?.toSorted((prevProduct, nextProduct) => {
+        let nextPrice = nextProduct.promotional_price ? nextProduct.promotional_price : nextProduct.price
+        let prevPrice = prevProduct.promotional_price ? prevProduct.promotional_price : prevProduct.price
         return selectedFilter === 'highest-price' ?
-        (Number(nextProduct.price) - Number(prevProduct.price)) : 
-        (Number(prevProduct.price) - Number(nextProduct.price))
+        (Number(nextPrice) - Number(prevPrice)) : 
+        (Number(prevPrice) - Number(nextPrice))
     })
     
     setProducts(arrayProducts) // Observação para ajustar - Quando está com categoria filtrada, está limpando o filtro de categoria.
