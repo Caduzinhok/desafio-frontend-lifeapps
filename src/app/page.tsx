@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import CategoryFilter from "@/interfaces/categoryFilter";
 import Product from "@/interfaces/product";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import nextAppLoader from "next/dist/build/webpack/loaders/next-app-loader";
 import Footer from "@/components/footer";
 import ProductCard from "@/components/productCard";
 

@@ -9,13 +9,17 @@ import Footer from "@/components/footer";
 import Image from "next/image";
 import { Heart } from "lucide-react";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { addProduct } from "@/state/cartSlice";
 
 export default function ProductPage() {
   const [produto, setProduto] = useState<Product | undefined>()
   const [isFindProduct, setIsFindProduct] = useState(true)
   const searchParams = useParams();
+  const dispatch = useDispatch();
   const productID = searchParams.id
   const priceFormated = produto && produto.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
+
   useEffect(() => {
     fetch(`https://api-prova-frontend.solucoeslifeapps.com.br/products?id=${productID}`)
       .then((response) => response.json())
@@ -34,6 +38,12 @@ export default function ProductPage() {
         console.log(err.message);
       });
   }, [])
+
+  function handleAddToCart() {
+    if (produto) {
+      dispatch(addProduct(produto))
+    }
+  }
   return (
     <>
       {produto ? (
@@ -45,12 +55,12 @@ export default function ProductPage() {
             </p>
             <div className="px-10 py-4 grid grid-cols-2 gap-20">
               <Image
-                  src={produto.image}
-                  alt="Product not found"
-                  className="h-auto object-contain max-h-[500px]"
-                  width={600}
-                  height={500}
-                />
+                src={produto.image}
+                alt="Product not found"
+                className="h-auto object-contain max-h-[500px]"
+                width={600}
+                height={500}
+              />
               <div className="flex flex-col justify-between">
                 <div className="w-full space-y-4">
                   <div className="flex items-center justify-between">
@@ -72,7 +82,10 @@ export default function ProductPage() {
                   </div>
                 </div>
 
-                <button type="button" className="w-full py-4 bg-green-500 text-white text-lg hover:bg-green-600 transition">
+                <button
+                  onClick={handleAddToCart}
+                  type="button"
+                  className="w-full py-4 bg-green-500 text-white text-lg hover:bg-green-600 transition">
                   ADICIONAR AO CARRINHO
                 </button>
               </div>

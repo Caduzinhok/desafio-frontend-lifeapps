@@ -1,8 +1,18 @@
 import { Search, UserRound, ShoppingBag } from "lucide-react";
 import Logo from "./logo";
 import Link from "next/link";
+import Product from "@/interfaces/product";
+import { useSelector } from "react-redux";
+import { RootState } from "@/state/store";
 
 export default function Navbar() {
+    const products: Product[] = useSelector((state: RootState) => state.cart.products)
+    function getLengthCartProducts(){
+        if(products.length > 9){
+            return '9+'
+        }
+        return products.length.toString()
+    }
     return (
         <nav className="h-32 w-full px-20 py-5 flex justify-between items-center space-x-4 bg-slate-100">
             <Link href="/">
@@ -20,8 +30,15 @@ export default function Navbar() {
                     <UserRound />
                 </button>
                 <button type="button" className="hover:scale-110">
-                    <Link href="/carrinho">
-                        <ShoppingBag />
+                    <Link href="/carrinho" className="relative">
+                        <ShoppingBag className="relative"/>
+                        {products.length > 0 && (
+                                <div className="flex justify-center items-center absolute bg-red-500 text-white rounded-full h-5 w-5 text-whites z-20 -top-2 -right-2 text-[10px]">
+                                    <span>
+                                    {getLengthCartProducts()}
+                                    </span>
+                                </div>
+                            )}
                     </Link>
                 </button>
             </div>

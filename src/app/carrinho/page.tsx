@@ -1,8 +1,49 @@
+"use client"
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
+import Product from "@/interfaces/product";
+import { removeProduct } from "@/state/cartSlice";
+import { RootState } from "@/state/store";
+import { Trash, Trash2 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CartPage() {
+    const products: Product[] = useSelector((state: RootState) => state.cart.products)
+    // Função para obter produtos únicos
+    const removeDuplicateProducts = (): Product[] => {
+        const result: Product[] = [];
+
+        // Usando `some` para verificar se o produto já existe no resultado
+        for (const item of products) {
+            if (!result.some((product) => product.id === item.id)) {
+                result.push(item);
+            }
+        }
+
+        return result;
+    };
+    const uniqueProducts = removeDuplicateProducts()
+    const dispatch = useDispatch()
+
+    function handleRemoveProduct(id: string){
+        return
+    }
+
+    function getTotalPriceProduct(product: Product){
+        let total = (Number(product.price) * Number(products.filter((item) => item.id == product.id).length))
+
+        return total.toLocaleString('pt-BR', {currency: 'BRL', style: 'currency'})
+    }
+
+    function getQuantityProduct(product: Product){
+        if (uniqueProducts) {
+            let length = uniqueProducts.filter((item: Product) => item.id == product.id).length
+            return length.toString()
+        }
+        return '0'
+    }
     return (
         <div className="h-screen min-h-screen flex flex-col justify-between">
             <Navbar />
@@ -10,16 +51,54 @@ export default function CartPage() {
                 <p className="text-lg text-slate-700">
                     <Link href="/">Home / </Link><span className="font-medium">Carrinho</span>
                 </p>
-                <div className="grid grid-cols-3">
-                    <div className="col-span-2">
+                <div className="grid grid-cols-3 gap-10">
+                    <div className="col-span-2 space-y-4">
                         <h1 className="text-4xl font-semibold">Carrinho</h1>
                         <p className="text-lg text-slate-700">Total Produtos:
                             <span className="text-black font-medium"> 12</span>
                         </p>
-                        <div className="col-span-1">
-                            {/* Aqui vou adicionar a lógica de itens conforme clicar em adicionar ao carrinho */}
+
+                        <div className="flex flex-col gap-4 overflow-scroll max-h-full">
+                            {uniqueProducts && (
+                                uniqueProducts.map((product) => {
+                                    return (
+                                        <div className="flex items-start gap-8 h-48" key={product.id}>
+                                            <Image
+                                                src={product.image}
+                                                alt={product.name}
+                                                className="object-cover w-full h-full"
+                                                width={400}
+                                                height={300}
+                                            />
+                                            <div className="w-full space-y-6">
+                                                <div className="w-full flex justify-between items-center">
+                                                    <h3 className="font-medium text-xl text-slate-600">
+                                                        {product.name}
+                                                    </h3>
+                                                    <button onClick={e => handleRemoveProduct(product.id)}>
+                                                        <Trash2 className="text-red-500" />
+                                                    </button>
+                                                </div>
+                                                <p>
+                                                    {product.description}
+                                                </p>
+                                                <div className="w-full flex items-end justify-between">
+                                                    <div className="flex items-center justify-center px-4 py-2 rounded-md border border-slate-400">
+                                                        {getQuantityProduct(product)}
+                                                    </div>
+                                                    <span className="text-lg font-medium">
+                                                        {getTotalPriceProduct(product)}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    )
+                                })
+                            )}
                         </div>
                     </div>
+
 
                     <div className="flex flex-col gap-4">
                         <h2 className="text-2xl font-medium">RESUMO</h2>
