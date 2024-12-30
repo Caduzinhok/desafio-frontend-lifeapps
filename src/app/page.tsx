@@ -41,7 +41,6 @@ export default function Home() {
     fetch('https://api-prova-frontend.solucoeslifeapps.com.br/products')
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
 
         // Atualizar Estados para gerenciamento de catalogo de produtos
         setProducts(data);
@@ -82,7 +81,6 @@ export default function Home() {
       return product.category === categoryName && product
     })
 
-    console.log(arrayProducts)
     setProducts(arrayProducts)
 
     if (arrayProducts){
@@ -112,12 +110,10 @@ export default function Home() {
     if (products === undefined) { // Validação de que existem produtos na lista
       return
     }
-    console.log("Entrou aqui")
     const indexOfLastProduct = currentPage * productsPerPage
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage
     const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct)
 
-    console.log(currentProducts)
     setProducts(currentProducts)
   }
 
@@ -191,7 +187,7 @@ export default function Home() {
         <div className="flex w-full items-center justify-center gap-4">
           <button
             onClick={lastPage}
-            className={`bg-slate-800 p-2 ${currentPage === 1 && "bg-slate-300"}`} disabled={currentPage === 1 ? true : false}
+            className={`p-2 ${currentPage === 1 ? "bg-slate-300" : "bg-slate-800"}`} disabled={currentPage === 1 ? true : false}
           >
             <ArrowLeft className="size-6 text-white" />
           </button>
@@ -199,7 +195,7 @@ export default function Home() {
           <span className="text-2xl font-medium p-2">{currentPage.toString()}</span>
 
           <button
-            className={`bg-slate-800 p-2 ${currentPage === totalPages && "bg-slate-300"}`} disabled={currentPage === totalPages ? true : false}
+            className={`p-2 ${currentPage === totalPages ? "bg-slate-300" : "bg-slate-800"}`} disabled={currentPage === totalPages ? true : false}
             onClick={nextPage}
           >
             <ArrowRight className="size-6 text-white" />
