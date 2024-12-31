@@ -35,7 +35,6 @@ export default function ProductPage() {
     fetch(`https://api-prova-frontend.solucoeslifeapps.com.br/products?id=${productID}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data[0]) {
 
           setProduct(data[0])

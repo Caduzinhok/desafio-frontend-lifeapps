@@ -8,6 +8,7 @@ import Product from "@/interfaces/product";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Footer from "@/components/footer";
 import ProductCard from "@/components/productCard";
+import NavigationOptions from "@/components/navigationOptions";
 
 const categoryFilters: CategoryFilter[] = [
   {
@@ -65,10 +66,10 @@ export default function Home() {
     })
 
     setArrayCategoryFilters(auxArrayFilters) // Atualizar filtros para mostrar o atual selecionado
-    
-    if(categoryName === "Todos os Produtos"){
+
+    if (categoryName === "Todos os Produtos") {
       // Atualizar a quantidade de produtos na pagina
-      if (auxProducts){
+      if (auxProducts) {
         setTotalProducts(auxProducts.length)
       }
 
@@ -83,26 +84,26 @@ export default function Home() {
 
     setProducts(arrayProducts)
 
-    if (arrayProducts){
+    if (arrayProducts) {
       setTotalProducts(arrayProducts.length)
     }
     setCurrentPage(1)
   }
 
-  function order_by_filter(selectedFilter: string){
+  function order_by_filter(selectedFilter: string) {
     let arrayProducts = products
 
-    if(selectedFilter !== 'most-purchased'){
+    if (selectedFilter !== 'most-purchased') {
       arrayProducts = products?.toSorted((prevProduct, nextProduct) => {
         let nextPrice = nextProduct.promotional_price ? nextProduct.promotional_price : nextProduct.price
         let prevPrice = prevProduct.promotional_price ? prevProduct.promotional_price : prevProduct.price
         return selectedFilter === 'highest-price' ?
-        (Number(nextPrice) - Number(prevPrice)) : 
-        (Number(prevPrice) - Number(nextPrice))
-    })
-    
-    setProducts(arrayProducts) // Observação para ajustar - Quando está com categoria filtrada, está limpando o filtro de categoria.
-    return
+          (Number(nextPrice) - Number(prevPrice)) :
+          (Number(prevPrice) - Number(nextPrice))
+      })
+
+      setProducts(arrayProducts) // Observação para ajustar - Quando está com categoria filtrada, está limpando o filtro de categoria.
+      return
     }
 
     setProducts(auxProducts)
@@ -131,14 +132,14 @@ export default function Home() {
   }
 
   return (
-    <div className="max-w-full w-full">
+    <div className="max-w-[100vw] w-screen">
       <Navbar />
-      <main className="space-y-8 w-full mb-20">
-        <div className="h-96 overflow-hidden relative">
+      <main className="space-y-8 mb-20">
+        <div className="md:h-96 overflow-hidden relative">
           <Image
             src="/background-image.jpg"
             alt="Main image about shopping"
-            className="fill-inherit bg-cover"
+            className="fill-inherit bg-cover w-full h-full md:w-auto md:h-auto"
             width={1920}
             height={800}
           />
@@ -148,7 +149,7 @@ export default function Home() {
           Conheça nossos produtos
         </h2>
 
-        <div className="flex w-full px-20 justify-between items-center gap-8">
+        <div className="flex flex-col w-full px-2 gap-4 justify-between items-center md:gap-8 md:flex-row md:px-20">
           {arrayCategoryFilters.map((categoryFilter) => {
             return (
               <div key={categoryFilter.name} className="w-full">
@@ -179,30 +180,19 @@ export default function Home() {
             products.map((product) => {
               return (
                 <ProductCard key={product.id}
-                {...product}
+                  {...product}
                 />
               )
             })
           )}
         </div>
 
-        <div className="flex w-full items-center justify-center gap-4">
-          <button
-            onClick={lastPage}
-            className={`p-2 ${currentPage === 1 ? "bg-slate-300" : "bg-slate-800"}`} disabled={currentPage === 1 ? true : false}
-          >
-            <ArrowLeft className="size-6 text-white" />
-          </button>
-
-          <span className="text-2xl font-medium p-2">{currentPage.toString()}</span>
-
-          <button
-            className={`p-2 ${currentPage === totalPages ? "bg-slate-300" : "bg-slate-800"}`} disabled={currentPage === totalPages ? true : false}
-            onClick={nextPage}
-          >
-            <ArrowRight className="size-6 text-white" />
-          </button>
-        </div>
+        <NavigationOptions
+          totalPages={totalPages}
+          nextPage={nextPage}
+          lastPage={lastPage}
+          currentPage={currentPage}
+        />
       </main>
 
       <Footer />

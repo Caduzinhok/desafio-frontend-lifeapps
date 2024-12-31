@@ -55,13 +55,13 @@ export default function CartPage() {
                             {uniqueProducts && (
                                 uniqueProducts.map((product) => {
                                     return (
-                                        <div className="flex items-start gap-8 h-48" key={product.id}>
+                                        <div className="flex items-start gap-8 h-52" key={product.id}>
                                             <Image
                                                 src={product.image}
                                                 alt={product.name}
                                                 className="object-cover w-full h-full"
                                                 width={400}
-                                                height={300}
+                                                height={350}
                                             />
                                             <div className="w-full space-y-6">
                                                 <div className="w-full flex justify-between items-center">
