@@ -30,7 +30,7 @@ export const useCart = () => {
         return products.filter((item) => item.id === product.id).length.toString();
     };
 
-    const getFullValuePayable = () => {
+    const getFullValuePayable = ():string => {
         let total = 0;
         products.forEach((product) => {
             total += product.promotional_price ? Number(product.promotional_price) : Number(product.price);
@@ -38,7 +38,7 @@ export const useCart = () => {
         return total.toLocaleString("pt-BR", { currency: "BRL", style: "currency" });
     };
 
-    const getFullValueProducts = () => {
+    const getFullValueProducts = ():string  => {
         let total = 0;
         products.forEach((product) => {
             total += Number(product.price);
@@ -48,7 +48,7 @@ export const useCart = () => {
 
     }
 
-    const getFullDiscountAmount = () => {
+    const getFullDiscountAmount = ():string => {
         let total = 0;
         products.forEach((product) => {
             if(product.promotional_price){

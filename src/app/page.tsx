@@ -3,14 +3,15 @@
 import Navbar from "@/components/navbar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import CategoryFilter from "@/interfaces/categoryFilter";
+import CategoryFilterInterface from "@/interfaces/categoryFilter";
 import Product from "@/interfaces/product";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import Footer from "@/components/footer";
-import ProductCard from "@/components/productCard";
-import NavigationOptions from "@/components/navigationOptions";
+import ProductCard from "@/components/home/productCard";
+import NavigationOptions from "@/components/home/navigationOptions";
+import CategoryFilter from "@/components/home/categoryFilter";
+import OrderFilter from "@/components/home/orderFilter";
 
-const categoryFilters: CategoryFilter[] = [
+const categoryFilters: CategoryFilterInterface[] = [
   {
     name: 'Todos os Produtos',
     selected: true,
@@ -30,7 +31,7 @@ const categoryFilters: CategoryFilter[] = [
 ]
 
 export default function Home() {
-  const [arrayCategoryFilters, setArrayCategoryFilters] = useState<CategoryFilter[]>(categoryFilters)
+  const [arrayCategoryFilters, setArrayCategoryFilters] = useState<CategoryFilterInterface[]>(categoryFilters)
   const [auxProducts, setAuxProducts] = useState<Product[]>() // Array auxiliar de produtos para não chamar a API toda vez que alterar a listagem de produtos
   const [products, setProducts] = useState<Product[]>()
   const [currentPage, setCurrentPage] = useState(1)
@@ -44,10 +45,11 @@ export default function Home() {
       .then((data) => {
 
         // Atualizar Estados para gerenciamento de catalogo de produtos
-        setProducts(data);
+        setProducts(data)
         setTotalPages(Math.ceil(data.length / productsPerPage))
         setTotalProducts(data.length)
         setAuxProducts(data)
+        FilterProductsByPage(data)
       })
       .catch((err) => {
         console.log(err.message);
@@ -55,7 +57,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    filter_products_by_page();
+    FilterProductsByPage()
   }, [currentPage]);
 
   function filterProductsByCategory(categoryName: string) {
@@ -71,13 +73,16 @@ export default function Home() {
       // Atualizar a quantidade de produtos na pagina
       if (auxProducts) {
         setTotalProducts(auxProducts.length)
+        setTotalPages(Math.ceil(auxProducts.length / productsPerPage))
       }
 
       // Atualizar para todos os produtos
       setProducts(auxProducts)
+      FilterProductsByPage(auxProducts)
       return
     }
 
+    // Pegar apenas os produtos com a categoria filtrada
     let arrayProducts = auxProducts?.filter((product) => {
       return product.category === categoryName && product
     })
@@ -86,11 +91,13 @@ export default function Home() {
 
     if (arrayProducts) {
       setTotalProducts(arrayProducts.length)
+      setTotalPages(Math.ceil(arrayProducts.length / productsPerPage))
     }
     setCurrentPage(1)
+
   }
 
-  function order_by_filter(selectedFilter: string) {
+  function OrderByFilter(selectedFilter: string) {
     let arrayProducts = products
 
     if (selectedFilter !== 'most-purchased') {
@@ -109,31 +116,28 @@ export default function Home() {
     setProducts(auxProducts)
   }
 
-  function filter_products_by_page() {
-    if (products === undefined) { // Validação de que existem produtos na lista
-      return
-    }
+function FilterProductsByPage(loadedProducts?: Product[]) {
+    const productsToFilter = loadedProducts || products;
     const indexOfLastProduct = currentPage * productsPerPage
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct)
-
+    const currentProducts = productsToFilter?.slice(indexOfFirstProduct, indexOfLastProduct)
     setProducts(currentProducts)
   }
 
   function nextPage() {
-    setProducts(auxProducts)
     setCurrentPage(prev => prev + 1)
+    setProducts(auxProducts)
 
   }
 
   function lastPage() {
-    setProducts(auxProducts)
     setCurrentPage(prev => prev - 1)
+    setProducts(auxProducts)
   }
 
   return (
     <div className="max-w-[100vw] w-screen">
-      <Navbar />
+       <Navbar />
       <main className="space-y-8 mb-20">
         <div className="md:h-96 overflow-hidden relative">
           <Image
@@ -149,33 +153,20 @@ export default function Home() {
           Conheça nossos produtos
         </h2>
 
-        <div className="flex flex-col w-full px-2 gap-4 justify-between items-center md:gap-8 md:flex-row md:px-20">
-          {arrayCategoryFilters.map((categoryFilter) => {
-            return (
-              <div key={categoryFilter.name} className="w-full">
-                <button
-                  onClick={() => filterProductsByCategory(categoryFilter.name)}
-                  className={`min-w-64 w-full py-4 text-lg text-center border border-slate-500 shadow-sm shadow-slate-500 transition hover:bg-slate-500 hover:text-white ${categoryFilter.selected && 'bg-slate-500 text-white'}`}>
-                  {categoryFilter.name}
-                </button>
-              </div>
-            )
-          })}
-        </div>
+        <CategoryFilter
+        filterProductsByCategory={filterProductsByCategory}
+        arrayCategoryFilters={arrayCategoryFilters}
+        />
 
-        <div className="flex justify-between items-center px-20">
+        <div className="flex flex-col gap-4 justify-center items-center md:flex-row md:gap-0 md:justify-between md:px-20">
           <span className="text-lg font-medium">
             {totalProducts && `${totalProducts} Produtos`}
           </span>
 
-          <select name="filter-order" id="filter-order" className="w-64 py-2 px-4 border border-slate-500 focus:outline-none" onChange={e => order_by_filter(e.target.value)}>
-            <option value="most-purchased">Mais Comprados</option>
-            <option value="highest-price">Maior Preço</option>
-            <option value="lowest-price">Menor Preço</option>
-          </select>
+          <OrderFilter OrderByFilter={OrderByFilter} />
         </div>
 
-        <div className="px-20 py-10 flex flex-wrap gap-4 items-center justify-center">
+        <div className="px-4 py-10 flex flex-col gap-4 items-center justify-center md:flex-row md:flex-wrap md:px-20">
           {products && (
             products.map((product) => {
               return (

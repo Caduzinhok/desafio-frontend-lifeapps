@@ -1,4 +1,4 @@
-export default interface CategoryFilter {
+export default interface CategoryFilterInterface {
     name: string;
     selected: boolean;
   }

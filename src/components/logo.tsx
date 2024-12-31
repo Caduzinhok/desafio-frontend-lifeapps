@@ -1,6 +1,6 @@
 import Image from "next/image"
 export default function Logo(){
     return (
-        <Image src="/logo.jpg" alt="Logo" width={80} height={80} className="w-auto h-auto rounded-md" />
+        <Image src="/logo.jpg" alt="Logo" width={60} height={60} className="W-12 h-12 md:w-full md:h-full rounded-md" />
     )
 }
