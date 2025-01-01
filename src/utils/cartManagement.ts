@@ -59,6 +59,24 @@ export const useCart = () => {
 
         return total.toLocaleString("pt-BR", { currency: "BRL", style: "currency" });
     }
+
+        // Função para obter produtos únicos
+        const removeDuplicateProducts = (products: Product[]): Product[] => {
+            const result: Product[] = [];
+    
+            if(!products){
+                return result
+            }
+            // Usando `some` para verificar se o produto já existe no resultado
+            for (const item of products) {
+                if (!result.some((product) => product.id === item.id)) {
+                    result.push(item);
+                }
+            }
+    
+            return result;
+        }
+
     return {
         products,
         handleRemoveProduct,
@@ -69,5 +87,6 @@ export const useCart = () => {
         getFullValuePayable,
         getFullValueProducts,
         getFullDiscountAmount,
+        removeDuplicateProducts,
     };
 };

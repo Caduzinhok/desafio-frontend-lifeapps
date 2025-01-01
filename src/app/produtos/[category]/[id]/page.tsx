@@ -6,12 +6,11 @@ import NotFound from "@/components/notFound";
 import Loading from "@/components/loading";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import Image from "next/image";
-import { Heart } from "lucide-react";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addProduct } from "@/state/cartSlice";
 import ProductDescription from "@/components/product/productDescription";
+import { formatValueAsCurrency } from "@/constants/formatValue";
 
 export default function ProductPage() {
   const [product, setProduct] = useState<Product | undefined>()
@@ -20,19 +19,6 @@ export default function ProductPage() {
   const dispatch = useDispatch();
   const productID = searchParams.id
 
-  const priceFormated = () => {
-    if (product) {
-      let value = product.price
-      return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
-    }
-  }
-
-  const promotionalPriceFormated = () => {
-    if (product?.promotional_price) {
-      let value = product.promotional_price
-      return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
-    }
-  }
   useEffect(() => {
     fetch(`https://api-prova-frontend.solucoeslifeapps.com.br/products?id=${productID}`)
       .then((response) => response.json())
@@ -67,9 +53,8 @@ export default function ProductPage() {
             </p>
             <ProductDescription 
             handleAddToCart={handleAddToCart}
-            priceFormated={priceFormated}
+            formatValueAsCurrency={formatValueAsCurrency}
             product={product}
-            promotionalPriceFormated={promotionalPriceFormated}
             />
           </main>
 

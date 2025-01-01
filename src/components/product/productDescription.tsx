@@ -3,11 +3,10 @@ import { Heart } from "lucide-react"
 import Image from "next/image"
 interface ProductDescriptionProps {
     product: Product
-    priceFormated: () => string | undefined
-    promotionalPriceFormated: () => string | undefined
+    formatValueAsCurrency: (value: Number) => string | undefined
     handleAddToCart: () => void
 }
-export default function ProductDescription({product, priceFormated, promotionalPriceFormated, handleAddToCart}: ProductDescriptionProps){
+export default function ProductDescription({product, formatValueAsCurrency, handleAddToCart}: ProductDescriptionProps){
     return (
         <div className="py-4 grid gap-4 md:gap-20 w-full md:grid-cols-2 md:px-10">
         <Image
@@ -29,12 +28,12 @@ export default function ProductDescription({product, priceFormated, promotionalP
             <div className="text-2xl text-red-500 font-medium">
               {product.promotional_price ? (
                 <p>
-                  <span className="text-lg text-slate-500 line-through">{priceFormated()}</span>
-                  <span> {promotionalPriceFormated()}</span>
+                  <span className="text-lg text-slate-500 line-through">{formatValueAsCurrency(product.price)}</span>
+                  <span> {formatValueAsCurrency(product.promotional_price)}</span>
                 </p>
               ) : (
                 <span>
-                  {priceFormated()}
+                  {formatValueAsCurrency(product.price)}
                 </span>
               )}
             </div>

@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 
 export default function CartPage() {
     const [productsCart, setProductsCart] = useState<Product[]>()
+    const [uniqueProducts, setUniqueProducts] = useState<Product[]>()
     const {
         products,
         handleRemoveProduct,
@@ -20,30 +21,13 @@ export default function CartPage() {
         getFullValuePayable,
         getFullValueProducts,
         getFullDiscountAmount,
+        removeDuplicateProducts,
     } = useCart();
 
     useEffect(() => {
         setProductsCart(products)
+        setUniqueProducts(removeDuplicateProducts(products))
     }, [products])
-
-    // Função para obter produtos únicos
-    const removeDuplicateProducts = (): Product[] => {
-        const result: Product[] = [];
-
-        if(!productsCart){
-            return result
-        }
-        // Usando `some` para verificar se o produto já existe no resultado
-        for (const item of productsCart) {
-            if (!result.some((product) => product.id === item.id)) {
-                result.push(item);
-            }
-        }
-
-        return result;
-    };
-
-    const uniqueProducts = removeDuplicateProducts()
 
 
     return (
@@ -85,7 +69,6 @@ export default function CartPage() {
                         getFullValuePayable={getFullValuePayable}
                         getFullValueProducts={getFullValueProducts}
                         handleClearCart={handleClearCart}
-                        
                     />
                     )}
 

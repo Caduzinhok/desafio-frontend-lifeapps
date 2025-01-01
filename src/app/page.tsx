@@ -10,25 +10,9 @@ import ProductCard from "@/components/home/productCard";
 import NavigationOptions from "@/components/home/navigationOptions";
 import CategoryFilter from "@/components/home/categoryFilter";
 import OrderFilter from "@/components/home/orderFilter";
+import { categoryFilters } from "@/constants/categoryFilters";
 
-const categoryFilters: CategoryFilterInterface[] = [
-  {
-    name: 'Todos os Produtos',
-    selected: true,
-  },
-  {
-    name: 'Tênis',
-    selected: false,
-  },
-  {
-    name: 'Camisetas',
-    selected: false,
-  },
-  {
-    name: 'Calças',
-    selected: false,
-  }
-]
+
 
 export default function Home() {
   const [arrayCategoryFilters, setArrayCategoryFilters] = useState<CategoryFilterInterface[]>(categoryFilters)
