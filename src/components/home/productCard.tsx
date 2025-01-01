@@ -10,7 +10,7 @@ export default function ProductCard(props: Product) {
                 pathname: `/produtos/${props.category}/${props.id}`,
             }}
         >
-            <div className="flex flex-col space-y-4 items-center">
+            <div className="flex flex-col space-y-4 items-center product-card">
 
                 <div className="relative w-full h-96">
                     {props.image && (
@@ -24,14 +24,14 @@ export default function ProductCard(props: Product) {
                     )}
 
                 </div>
-                <p className="text-xl text-slate-900">{props.name}</p>
+                <p className="text-xl text-slate-900 product-name">{props.name}</p>
                 {props.promotional_price ? (
                     <div className="space-x-4">
                         <span className="line-through text-slate-600">R$ {props.price.toString()}</span>
-                        <span className="">R$ {props.promotional_price.toString()}</span>
+                        <span className="product-price">R$ {props.promotional_price.toString()}</span>
                     </div>
                 ) : (
-                    <span className="text-black">R$ {props.price.toString()}</span>
+                    <span className="text-black product-price">R$ {props.price.toString()}</span>
                 )}
 
             </div>

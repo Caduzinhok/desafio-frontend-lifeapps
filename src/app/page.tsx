@@ -150,7 +150,7 @@ function FilterProductsByPage(loadedProducts?: Product[]) {
           <OrderFilter OrderByFilter={OrderByFilter} />
         </div>
 
-        <div className="px-4 py-10 flex flex-col gap-4 items-center justify-center md:flex-row md:flex-wrap md:px-20">
+        <div className="px-4 py-10 flex flex-col gap-4 items-center justify-center md:flex-row md:flex-wrap md:px-20 products">
           {products && (
             products.map((product) => {
               return (

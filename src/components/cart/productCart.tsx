@@ -11,7 +11,7 @@ interface ProductCartProps {
 
 export default function ProductCart({ product, handleRemoveProduct, getQuantityProduct, getTotalPromotionalPriceProduct, getTotalPriceProduct }: ProductCartProps) {
     return (
-        <div className="flex items-start gap-4 md:gap-8 md:h-52" key={product.id}>
+        <div className="flex items-start gap-4 md:gap-8 md:h-52 cart-item" key={product.id}>
             <Image
                 src={product.image}
                 alt={product.name}
@@ -21,11 +21,11 @@ export default function ProductCart({ product, handleRemoveProduct, getQuantityP
             />
             <div className="w-full space-y-6">
                 <div className="w-full flex justify-between items-center">
-                    <h3 className="font-medium text-xl text-slate-600">
+                    <h3 className="font-medium text-xl text-slate-600 product-name">
                         {product.name}
                     </h3>
                     <button onClick={e => handleRemoveProduct(product.id)}>
-                        <Trash2 className="text-red-500" />
+                        <Trash2 className="text-red-500 remove-item" />
                     </button>
                 </div>
                 <p>
@@ -35,14 +35,14 @@ export default function ProductCart({ product, handleRemoveProduct, getQuantityP
                     <div className="flex items-center justify-center px-4 py-2 rounded-md border border-slate-400">
                         {getQuantityProduct(product)}
                     </div>
-                    <span className="text-lg font-medium">
+                    <span className="text-lg font-medium product-price">
                         {product.promotional_price ? (
                             <span>
                                 <span className="line-through text-slate-600 text-sm"> {getTotalPriceProduct(product)}</span>
                                 <span className=""> {getTotalPromotionalPriceProduct(product)}</span>
                             </span>
                         ) : (
-                            <span>
+                            <span className="">
                                 {getTotalPriceProduct(product)}
                             </span>
                         )}

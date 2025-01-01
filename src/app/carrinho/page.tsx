@@ -7,6 +7,7 @@ import Product from "@/interfaces/product";
 import { useCart } from "@/utils/cartManagement";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ShoppingCart } from "lucide-react";
 
 export default function CartPage() {
     const [productsCart, setProductsCart] = useState<Product[]>()
@@ -44,8 +45,10 @@ export default function CartPage() {
                             <span className="text-black font-medium"> {productsCart && productsCart.length}</span>
                         </p>
 
-                        <div className="flex flex-col gap-4 pr-6 md:max-h-[500px] md:overflow-y-auto ">
-                            {uniqueProducts  && (
+                        <div
+                            id="cart-items"
+                            className="flex flex-col gap-4 pr-6 md:max-h-[500px] md:overflow-y-auto">
+                            {uniqueProducts && (
                                 uniqueProducts.map((product) => {
                                     return (
                                         <div key={product.id}>
@@ -60,16 +63,27 @@ export default function CartPage() {
                                     )
                                 })
                             )}
+                            {uniqueProducts && uniqueProducts.length === 0 &&
+                                (
+                                    <div className="flex flex-col items-center justify-center gap-2">
+                                        <p className="text-3xl">
+                                            Seu carrinho está vazio!
+                                        </p>
+                                        <ShoppingCart className="size-20 text-red-500" />
+                                    </div>
+
+                                )
+                            }
                         </div>
                     </div>
-                    
+
                     {productsCart && (
                         <SummaryCart
-                        getFullDiscountAmount={getFullDiscountAmount}
-                        getFullValuePayable={getFullValuePayable}
-                        getFullValueProducts={getFullValueProducts}
-                        handleClearCart={handleClearCart}
-                    />
+                            getFullDiscountAmount={getFullDiscountAmount}
+                            getFullValuePayable={getFullValuePayable}
+                            getFullValueProducts={getFullValueProducts}
+                            handleClearCart={handleClearCart}
+                        />
                     )}
 
                 </div>

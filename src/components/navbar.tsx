@@ -38,11 +38,13 @@ export default function Navbar() {
                     <UserRound />
                 </button>
 
-                <Link href="/carrinho" className="relative hover:scale-110">
+                <Link href="/carrinho" className="relative hover:scale-110 cart-icon">
                     <ShoppingBag className="relative" />
                     <div>
                         {cartLength && (
-                            <div className="flex justify-center items-center absolute bg-red-500 text-white rounded-full h-5 w-5 text-whites z-20 -top-2 -right-2 text-[10px]">
+                            <div
+                            id="cart-quantity" 
+                            className="flex justify-center items-center absolute bg-red-500 text-white rounded-full h-5 w-5 text-whites z-20 -top-2 -right-2 text-[10px]">
                                 <span>
                                     {cartLength}
                                 </span>

@@ -26,6 +26,7 @@ export default function ProductPage() {
         if (data[0]) {
 
           setProduct(data[0])
+          console.log(data[0])
         } else {
           setIsFindProduct(false)
         }

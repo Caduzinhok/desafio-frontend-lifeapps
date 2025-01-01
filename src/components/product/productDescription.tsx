@@ -25,7 +25,7 @@ export default function ProductDescription({product, formatValueAsCurrency, hand
               </button>
             </div>
 
-            <div className="text-2xl text-red-500 font-medium">
+            <div className="text-2xl text-red-500 font-medium product-price">
               {product.promotional_price ? (
                 <p>
                   <span className="text-lg text-slate-500 line-through">{formatValueAsCurrency(product.price)}</span>
@@ -47,6 +47,7 @@ export default function ProductDescription({product, formatValueAsCurrency, hand
           </div>
 
           <button
+            id="add-to-cart"
             onClick={handleAddToCart}
             type="button"
             className="w-full py-4 bg-green-500 text-white text-lg hover:bg-green-600 transition">

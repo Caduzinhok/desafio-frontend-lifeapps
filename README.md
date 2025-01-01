@@ -53,4 +53,5 @@ Ambos os resultados foram idênticos
     <li>Lucide React</li>
     <li>Redux</li>
     <li>Tailwindcss</li>
+    <li>Cypress</li>
 </ul>
