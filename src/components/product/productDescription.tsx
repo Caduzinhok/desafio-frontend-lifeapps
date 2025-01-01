@@ -3,7 +3,7 @@ import { Heart } from "lucide-react"
 import Image from "next/image"
 interface ProductDescriptionProps {
     product: Product
-    formatValueAsCurrency: (value: Number) => string | undefined
+    formatValueAsCurrency: (value: number) => string
     handleAddToCart: () => void
 }
 export default function ProductDescription({product, formatValueAsCurrency, handleAddToCart}: ProductDescriptionProps){

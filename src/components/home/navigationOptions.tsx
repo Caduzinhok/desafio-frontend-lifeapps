@@ -3,8 +3,8 @@ import { ArrowLeft, ArrowRight } from "lucide-react"
 interface NavigationOptionsProps {
     lastPage: () => void
     nextPage: () => void
-    currentPage: Number
-    totalPages: Number
+    currentPage: number
+    totalPages: number
 }
 export default function NavigationOptions({lastPage, nextPage, currentPage, totalPages}: NavigationOptionsProps) {
     return (

@@ -3,8 +3,8 @@ export default interface Product{
     name: string
     description: string
     category: string
-    price: Number
-    discount_percentage?: Number
+    price: number
+    discount_percentage?: number
     image: string
-    promotional_price?: Number
+    promotional_price?: number
 }
