@@ -8,18 +8,18 @@ export default function Footer(){
                 <Logo />
             </Link>
             <div className="flex gap-4">
-                <a href="/" className="hover:text-slate-900 hover:font-semibold">
+                <Link href="/" className="hover:text-slate-900 hover:font-semibold">
                     Home
-                </a>
-                <a href="/" className="hover:text-slate-900 hover:font-semibold">
+                </Link >
+                <Link  href="/" className="hover:text-slate-900 hover:font-semibold">
                     Tênis
-                </a>
-                <a href="/" className="hover:text-slate-900 hover:font-semibold">
+                </Link >
+                <Link  href="/" className="hover:text-slate-900 hover:font-semibold">
                     Camisetas
-                </a>
-                <a href="/" className="hover:text-slate-900 hover:font-semibold">
+                </Link >
+                <Link  href="/" className="hover:text-slate-900 hover:font-semibold">
                     Calças
-                </a>
+                </Link >
             </div>
         </footer>
     )

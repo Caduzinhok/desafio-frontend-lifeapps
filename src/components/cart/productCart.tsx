@@ -24,7 +24,7 @@ export default function ProductCart({ product, handleRemoveProduct, getQuantityP
                     <h3 className="font-medium text-xl text-slate-600 product-name">
                         {product.name}
                     </h3>
-                    <button onClick={e => handleRemoveProduct(product.id)}>
+                    <button onClick={() =>handleRemoveProduct(product.id)}>
                         <Trash2 className="text-red-500 remove-item" />
                     </button>
                 </div>
@@ -42,7 +42,7 @@ export default function ProductCart({ product, handleRemoveProduct, getQuantityP
                                 <span className=""> {getTotalPromotionalPriceProduct(product)}</span>
                             </span>
                         ) : (
-                            <span className="">
+                            <span >
                                 {getTotalPriceProduct(product)}
                             </span>
                         )}

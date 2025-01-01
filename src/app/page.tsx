@@ -46,7 +46,7 @@ export default function Home() {
 
   function filterProductsByCategory(categoryName: string) {
     // Alterar a opção selecionada de acordo com o click atual
-    let auxArrayFilters = arrayCategoryFilters.map((categoryFilter) => {
+    const auxArrayFilters = arrayCategoryFilters.map((categoryFilter) => {
       categoryFilter.selected = categoryFilter.name === categoryName ? true : false
       return categoryFilter
     })
@@ -67,7 +67,7 @@ export default function Home() {
     }
 
     // Pegar apenas os produtos com a categoria filtrada
-    let arrayProducts = auxProducts?.filter((product) => {
+    const arrayProducts = auxProducts?.filter((product) => {
       return product.category === categoryName && product
     })
 
@@ -86,8 +86,8 @@ export default function Home() {
 
     if (selectedFilter !== 'most-purchased') {
       arrayProducts = products?.toSorted((prevProduct, nextProduct) => {
-        let nextPrice = nextProduct.promotional_price ? nextProduct.promotional_price : nextProduct.price
-        let prevPrice = prevProduct.promotional_price ? prevProduct.promotional_price : prevProduct.price
+        const nextPrice = nextProduct.promotional_price ? nextProduct.promotional_price : nextProduct.price
+        const prevPrice = prevProduct.promotional_price ? prevProduct.promotional_price : prevProduct.price
         return selectedFilter === 'highest-price' ?
           (Number(nextPrice) - Number(prevPrice)) :
           (Number(prevPrice) - Number(nextPrice))

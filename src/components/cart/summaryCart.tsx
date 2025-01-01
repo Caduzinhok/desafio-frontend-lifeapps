@@ -31,7 +31,7 @@ export default function SummaryCart({ getFullDiscountAmount, getFullValuePayable
 
             <div className="flex w-full gap-2">
                 <button
-                    onClick={e => handleClearCart()}
+                    onClick={handleClearCart}
                     id="clear-cart"
                     className="w-full py-2 bg-red-500 text-white">
                     LIMPAR CARRINHO

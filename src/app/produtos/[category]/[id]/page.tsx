@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addProduct } from "@/state/cartSlice";
 import ProductDescription from "@/components/product/productDescription";
-import { formatValueAsCurrency } from "@/constants/formatValue";
+import { formatValueAsCurrency } from "@/utils/formatValue";
 
 export default function ProductPage() {
   const [product, setProduct] = useState<Product | undefined>()
