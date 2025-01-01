@@ -2,7 +2,9 @@
 <p>
 Este projeto visa a solução do Desafio de Frontend de criação de um simples e-commerce de vestuário.
 </p>
-<p></p>
+<p>
+Caso você queira abrir apenas para visualização: <a href="https://desafio-frontend-lifeapps.vercel.app/">desafio-frontend-lifeapps/</a>
+</p>
 
 ## Objetivo
 O objetivo é implementar um e-commerce para venda de vestuário. O layout é composto por uma página de catálogo de produtos, onde o usuário pode filtrar por categoria e buscar por nome do produto:
